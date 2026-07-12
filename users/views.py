@@ -7,7 +7,7 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('shop:index')
+        return redirect('shop:catalog')
     
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -15,15 +15,15 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Регистрация прошла успешно! Добро пожаловать!')
-            return redirect('shop:index')
+            return redirect('shop:catalog')
     else:
         form = CustomUserCreationForm()
     
     return render(request, 'register.html', {'form': form})
 
-def login(request):
+def _login(request):
     if request.user.is_authenticated:
-        return redirect('shop:index')
+        return redirect('shop:catalog')
     
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -34,26 +34,26 @@ def login(request):
         if user is not None:
             login(request, user)
             messages.success(request, f'Добро пожаловать, {user.username}!')
-            return redirect('shop:index')
+            return redirect('shop:catalog')
         else:
             messages.error(request, 'Неверное имя пользователя или пароль.')
     
     return render(request, 'login.html')
 
 @login_required
-def logout(request):
+def _logout(request):
     logout(request)
     messages.info(request, 'Вы вышли из системы.')
-    return redirect('shop:index')
+    return redirect('shop:catalog')
 
 @login_required
-def profile(request):
+def profile(request):  
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Данные успешно обновлены!')
-            return redirect('profile')
+            return redirect('users:profile')
     else:
         form = CustomUserChangeForm(instance=request.user)
     

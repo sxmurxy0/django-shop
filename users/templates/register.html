@@ -33,23 +33,22 @@
                         {{ form.email }}
                     </div>
                     <div class="mb-3">
-                        <label for="id_first_name" class="form-label">Имя</label>
+                        <label for="id_first_name" class="form-label">Имя *</label>
                         {{ form.first_name }}
                     </div>
                     <div class="mb-3">
-                        <label for="id_last_name" class="form-label">Фамилия</label>
+                        <label for="id_last_name" class="form-label">Фамилия *</label>
                         {{ form.last_name }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_phone" class="form-label">Телефон</label>
-                        {{ form.phone }}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
+                        <label for="id_postal_code" class="form-label">Почтовый индекс *</label>
+                        {{ form.postal_code }}
+                    </div>
+                    <div class="mb-3">
                         <label for="id_password1" class="form-label">Пароль *</label>
                         {{ form.password1 }}
-                        <small class="text-muted">Минимум 8 символов</small>
                     </div>
                     <div class="mb-3">
                         <label for="id_password2" class="form-label">Подтверждение пароля *</label>

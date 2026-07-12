@@ -7,7 +7,7 @@ class User(AbstractUser):
     
     postal_code = models.CharField(
         _('Почтовый индекс'),
-        max_length=20,
+        max_length=6,
         blank=True,
         null=True
     )

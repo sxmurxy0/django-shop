@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import User
 
@@ -15,14 +15,15 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     username = forms.CharField(
+        required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Никнейм'
+            'placeholder': 'Имя пользователя'
         })
     )
 
     first_name = forms.CharField(
-        required=False,
+        required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Имя'
@@ -30,7 +31,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     last_name = forms.CharField(
-        required=False,
+        required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Фамилия'
@@ -38,7 +39,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     postal_code = forms.CharField(
-        required=False,
+        required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Почтовый индекс'
@@ -46,6 +47,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     password1 = forms.CharField(
+        required=True,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'placeholder': 'Пароль'
@@ -53,6 +55,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     password2 = forms.CharField(
+        required=True,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'placeholder': 'Подтверждение пароля'
@@ -121,32 +124,6 @@ class CustomUserChangeForm(forms.ModelForm):
             'username', 'email', 'first_name', 'last_name',
             'postal_code'
         )
-    
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
-            raise ValidationError('Пользователь с таким email уже существует!')
-        return email
-
-
-class CustomUserAdminCreationForm(UserCreationForm):
-      
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'postal_code')
-    
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
-            raise ValidationError('Пользователь с таким email уже существует!')
-        return email
-
-
-class CustomUserAdminChangeForm(forms.ModelForm):
-    
-    class Meta:
-        model = User
-        fields = '__all__'
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
