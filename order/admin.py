@@ -12,7 +12,6 @@ class OrderItemInline(admin.TabularInline):
         return f'{obj.get_total_price()} ₽'
     get_total_price.short_description = 'Сумма'
 
-
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'total_price_display', 'status', 'created_at']

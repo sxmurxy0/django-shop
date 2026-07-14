@@ -5,7 +5,6 @@ from .models import User
 
 
 class CustomUserCreationForm(UserCreationForm):
-
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={
@@ -13,7 +12,6 @@ class CustomUserCreationForm(UserCreationForm):
             'placeholder': 'Email'
         })
     )
-
     username = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={
@@ -21,7 +19,6 @@ class CustomUserCreationForm(UserCreationForm):
             'placeholder': 'Имя пользователя'
         })
     )
-
     first_name = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={
@@ -29,7 +26,6 @@ class CustomUserCreationForm(UserCreationForm):
             'placeholder': 'Имя'
         })
     )
-
     last_name = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={
@@ -37,7 +33,6 @@ class CustomUserCreationForm(UserCreationForm):
             'placeholder': 'Фамилия'
         })
     )
-
     postal_code = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={
@@ -45,7 +40,6 @@ class CustomUserCreationForm(UserCreationForm):
             'placeholder': 'Почтовый индекс'
         })
     )
-
     password1 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
@@ -53,7 +47,6 @@ class CustomUserCreationForm(UserCreationForm):
             'placeholder': 'Пароль'
         })
     )
-
     password2 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
@@ -84,33 +77,28 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomUserChangeForm(forms.ModelForm):
-    
     username = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control'
         })
     )
-
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
             'class': 'form-control'
         })
     )
-
     first_name = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control'
         })
     )
-
     last_name = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control'
         })
     )
-
     postal_code = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={

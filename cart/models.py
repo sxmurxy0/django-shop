@@ -29,7 +29,6 @@ class Cart(models.Model):
     def clear(self):
         self.items.all().delete()
 
-
 class CartItem(models.Model):
     cart = models.ForeignKey(
         Cart,

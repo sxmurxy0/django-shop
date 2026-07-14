@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Category(models.Model):
-
     name = models.CharField(_('Название'), max_length=100)
     description = models.TextField(_('Описание'), blank=True)
     created_at = models.DateTimeField(_('Создана'), auto_now_add=True)
@@ -17,7 +16,6 @@ class Category(models.Model):
         return self.name
 
 class Product(models.Model):
-
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,

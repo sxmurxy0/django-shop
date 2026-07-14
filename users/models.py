@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
-    
     postal_code = models.CharField(
         _('Почтовый индекс'),
         max_length=6,
