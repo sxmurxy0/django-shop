@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'shop',
     'cart',
+    'order',
 ]
 
 LOGIN_URL = '/login/'

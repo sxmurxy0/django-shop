@@ -19,7 +19,7 @@ def cart_detail(request):
         'total_price': total_price,
         'total_quantity': total_quantity,
     }
-    return render(request, 'detail.html', context)
+    return render(request, 'cart.html', context)
 
 @login_required
 @require_POST

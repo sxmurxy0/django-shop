@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Заказ #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-6 fw-bold">Заказ #{{ order.id }}</h1>
+            <p class="text-muted">Создан: {{ order.created_at|date:"d.m.Y H:i" }}</p>
+        </div>
+        <div>
+            <span class="badge {% if order.status == 'new' %}bg-primary{% elif order.status == 'processing' %}bg-warning{% elif order.status == 'shipped' %}bg-info{% elif order.status == 'delivered' %}bg-success{% elif order.status == 'cancelled' %}bg-danger{% endif %} fs-6 p-2 me-2">
+                {{ order.get_status_display }}
+            </span>
+            {% if order.status == 'new' %}
+                <a href="{% url 'order:order_cancel' order.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Отменить заказ?')">
+                    <i class="bi bi-x-circle"></i> Отменить
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Товары в заказе</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Товар</th>
+                                    <th>Количество</th>
+                                    <th>Цена</th>
+                                    <th>Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                    <tr>
+                                        <td>{{ item.product.name }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.price }} ₽</td>
+                                        <td>{{ item.get_total_price }} ₽</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr class="fw-bold">
+                                    <td colspan="3" class="text-end">Итого:</td>
+                                    <td>{{ order.total_price }} ₽</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Данные доставки</h5>
+                </div>
+                <div class="card-body">
+                    {% if order.postal_code %}
+                        <p><strong>Индекс:</strong> {{ order.postal_code }}</p>
+                    {% endif %}
+                    <p><strong>Email:</strong> {{ order.email }}</p>
+                    {% if order.comment %}
+                        <p><strong>Комментарий:</strong> {{ order.comment }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Статус заказа</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-column gap-2">
+                        {% for value, label in status_choices %}
+                            <div class="d-flex align-items-center gap-2">
+                                {% if order.status == value %}
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                    <span class="fw-bold">{{ label }}</span>
+                                {% else %}
+                                    <i class="bi bi-circle text-muted"></i>
+                                    <span class="text-muted">{{ label }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-3">
+                <a href="{% url 'order:order_list' %}" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-arrow-left"></i> Все заказы
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
